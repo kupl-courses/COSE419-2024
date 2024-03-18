@@ -1,6 +1,6 @@
 # Installing on Windows
 1. Install Vagrant (https://developer.hashicorp.com/vagrant/install?product_intent=vagrant)
-2. Install VirtualBox 
+2. Install VirtualBox (https://www.oracle.com/kr/virtualization/technologies/vm/downloads/virtualbox-downloads.html)
 3. Run 
 ```
 vagrant up
