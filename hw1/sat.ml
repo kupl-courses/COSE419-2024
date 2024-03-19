@@ -5,8 +5,8 @@ type var = string
 
 (*** Propositional Formulas ***)
 type formula = 
-  | True 
   | False 
+  | True 
   | Var of var 
   | Not of formula 
   | And of formula * formula
@@ -14,17 +14,17 @@ type formula =
   | Imply of formula * formula
   | Iff of formula * formula
 
-let rec string_of_formula f = 
-  match f with 
-  | True -> "true"
-  | False -> "false"
-  | Var x -> x 
-  | Not f -> "not " ^ string_of_formula f 
-  | And (f1, f2) -> "(" ^ string_of_formula f1 ^ " and " ^ string_of_formula f2 ^ ")"
-  | Or (f1, f2) -> "(" ^ string_of_formula f1 ^ " or " ^ string_of_formula f2 ^ ")"
-  | Imply (f1, f2) -> "(" ^ string_of_formula f1 ^ " -> " ^ string_of_formula f2 ^ ")"
-  | Iff (f1, f2) -> "(" ^ string_of_formula f1 ^ " <-> " ^ string_of_formula f2 ^ ")"
-
+  let rec string_of_formula f = 
+    match f with 
+    | True -> "true"
+    | False -> "false"
+    | Var x -> x 
+    | Not f -> "(not " ^ string_of_formula f ^ ")"
+    | And (f1, f2) -> "(" ^ string_of_formula f1 ^ " and " ^ string_of_formula f2 ^ ")"
+    | Or (f1, f2) -> "(" ^ string_of_formula f1 ^ " or " ^ string_of_formula f2 ^ ")"
+    | Imply (f1, f2) -> "(" ^ string_of_formula f1 ^ " -> " ^ string_of_formula f2 ^ ")"
+    | Iff (f1, f2) -> "(" ^ string_of_formula f1 ^ " <-> " ^ string_of_formula f2 ^ ")"
+  
 (*** CNF ***)
 type literal = bool * var (* false means negated *)
 type clause = literal list 
@@ -37,20 +37,19 @@ let string_of_cnf a = string_of_list string_of_clause a ~first:"(" ~last:")" ~se
 (*** DPLL ***)
 exception Not_implemented 
 
-(* conversion to CNF *)
+(* Problem 1: CNF conversion *)
 let convert : formula -> cnf 
 =fun _ -> raise Not_implemented (* TODO *)
 
-(* substitution a[v/x]: replace x by v in a *)
-(* the resulting cnf must be in simplified form *)
+(* Problem 2: substitution a[v/x] (replacing x by v in a) *)
 let subst : cnf -> bool -> var -> cnf 
 =fun a v x -> ignore (a,v,x); raise Not_implemented  (* TODO *)
 
-(* boolean constraint propagation *)
+(* Problem 3: boolean constraint propagation *)
 let (* rec *) bcp : cnf -> cnf
 =fun _ -> raise Not_implemented (* TODO *)
 
-(* pure literal elimination *)
+(* Problem 4: pure literal elimination *)
 let (* rec *) ple : cnf -> cnf 
 =fun _ -> raise Not_implemented (* TODO*)
 
