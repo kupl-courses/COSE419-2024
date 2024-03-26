@@ -1,0 +1,10 @@
+(lang dune 2.4)
+
+(name z3examples)
+
+(package
+  (name z3examples)
+  (depends
+    (dune :build)
+    (core :build)
+    (z3 :build)))

@@ -1,0 +1,6 @@
+let _ = Toy.run () 
+(* let _ = Z3sat.run ()  *)
+(* let _ = Equiv.run () *)
+(* let _ = Seat.run ()  *)
+(* let _ = Coloring.run()  *)
+(* let _ = Queen.run()  *)
