@@ -14,7 +14,7 @@ let sets1 : sets = (6, 7,
 ])
 
 type formula = 
-  | S of int 
+  | X of int 
   | T of int * int 
   | Bool of bool 
   | And of formula list 
@@ -24,8 +24,5 @@ type formula =
   | Iff of formula * formula 
   | Neq of int * int 
 
-let encode : sets -> formula 
-=fun (n, m, t) -> ignore (n, m, t); Bool true (* TODO *)
-
-let solve : formula -> int list 
-=fun f -> ignore f; [] (* TODO *)
+let cover : sets -> int list  
+=fun (n, m, t) -> ignore (n, m, t); [] (* TODO *)
