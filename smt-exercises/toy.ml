@@ -52,6 +52,28 @@ let f4 = Expr.create_eq (Expr.create_land x y) y
 let f5 = Expr.create_eq (Expr.create_shl x c2) c3
 let f6 = Expr.create_eq (Expr.create_shl x c2) c24
 
+(* Uninterpreted functions *)
+let out = Expr.create_var (Expr.sort_of_int()) ~name:"out"
+let out0 = Expr.create_var (Expr.sort_of_int()) ~name:"out0"
+let out1 = Expr.create_var (Expr.sort_of_int()) ~name:"out1"
+
+let out2 = Expr.create_var (Expr.sort_of_int()) ~name:"out2"
+let in_ = Expr.create_var (Expr.sort_of_int()) ~name:"in"
+
+let g = Z3.FuncDecl.mk_func_decl 
+          (Ctx.read()) 
+          (Symbol.create "g") 
+          [Expr.sort_of_int(); Expr.sort_of_int()] 
+          (Expr.sort_of_int())
+
+let phi_a = Fmla.create_and [
+  Expr.create_eq out0 in_;
+  Expr.create_eq out1 (Z3.FuncDecl.apply g [out0; in_]); 
+  Expr.create_eq out2 (Z3.FuncDecl.apply g [out1; in_])
+]
+let phi_b = Expr.create_eq out (Z3.FuncDecl.apply g [Z3.FuncDecl.apply g [in_; in_]; in_])
+let f7 = Fmla.create_imply (Fmla.create_and [phi_a; phi_b]) (Expr.create_eq out2 out) 
+
 (* Arrays *)
 let a = Expr.create_var (Expr.sort_of_arr (Expr.sort_of_int())) ~name:"a" 
 let i = Expr.create_var (Expr.sort_of_int()) ~name:"i"
@@ -59,7 +81,7 @@ let e = Expr.create_var (Expr.sort_of_int()) ~name:"e"
 let j = Expr.create_var (Expr.sort_of_int()) ~name:"j"
 
 (* a[i] = e -> forall j. a<i:e>[j] = a[j] *)
-let f7 = Fmla.create_imply 
+let f8 = Fmla.create_imply 
           (Expr.create_eq (Expr.read_arr a ~idx:i) e) 
           (Fmla.create_forall j 
             (Expr.create_eq 
@@ -69,10 +91,9 @@ let f7 = Fmla.create_imply
           )
 
 (* a[i] = e -> a<i:e> = a *)
-let f8 = Fmla.create_imply 
+let f9 = Fmla.create_imply 
           (Expr.create_eq (Expr.read_arr a ~idx:i) e) 
           (Expr.create_eq (Expr.update_arr a ~idx:i ~value:e) a)
-          
 
 let run () = 
   let _ = check_sat f1 in
@@ -83,4 +104,5 @@ let run () =
   let _ = check_sat f6 in 
   let _ = check_sat (Fmla.create_not f7) in 
   let _ = check_sat (Fmla.create_not f8) in 
+  let _ = check_sat (Fmla.create_not f9) in 
     ()
