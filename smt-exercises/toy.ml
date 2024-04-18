@@ -52,6 +52,28 @@ let f4 = Expr.create_eq (Expr.create_land x y) y
 let f5 = Expr.create_eq (Expr.create_shl x c2) c3
 let f6 = Expr.create_eq (Expr.create_shl x c2) c24
 
+(* Arrays *)
+let a = Expr.create_var (Expr.sort_of_arr (Expr.sort_of_int())) ~name:"a" 
+let i = Expr.create_var (Expr.sort_of_int()) ~name:"i"
+let e = Expr.create_var (Expr.sort_of_int()) ~name:"e"
+let j = Expr.create_var (Expr.sort_of_int()) ~name:"j"
+
+(* a[i] = e -> forall j. a<i:e>[j] = a[j] *)
+let f7 = Fmla.create_imply 
+          (Expr.create_eq (Expr.read_arr a ~idx:i) e) 
+          (Fmla.create_forall j 
+            (Expr.create_eq 
+              (Expr.read_arr (Expr.update_arr a ~idx:i ~value:e) ~idx:j)
+              (Expr.read_arr a ~idx:j)
+            )
+          )
+
+(* a[i] = e -> a<i:e> = a *)
+let f8 = Fmla.create_imply 
+          (Expr.create_eq (Expr.read_arr a ~idx:i) e) 
+          (Expr.create_eq (Expr.update_arr a ~idx:i ~value:e) a)
+          
+
 let run () = 
   let _ = check_sat f1 in
   let _ = check_sat f2 in  
@@ -59,4 +81,6 @@ let run () =
   let _ = check_sat f4 in 
   let _ = check_sat f5 in 
   let _ = check_sat f6 in 
+  let _ = check_sat (Fmla.create_not f7) in 
+  let _ = check_sat (Fmla.create_not f8) in 
     ()
