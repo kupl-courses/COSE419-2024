@@ -1,0 +1,14 @@
+(executable
+  (name main)
+  (public_name hw3)
+  (libraries
+    unix
+    core 
+    batteries
+    z3
+    logs
+    mtime
+    mtime.clock.os
+  )
+  
+(package hw3))
