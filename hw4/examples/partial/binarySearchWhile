@@ -1,0 +1,20 @@
+@pre: 0 <= |a| && sorted(a, 0, |a| - 1)
+@post: (0 <= rv -> rv < |a| && a[rv] == value) && (rv < 0 -> forall k. 0 <= k && k < |a| -> a[k] != value)
+int BinarySearchWhile(int[] a, int value) 
+{
+  int low; int high; int mid; 
+  low := 0;
+  high := |a|; 
+
+  while 
+    @L: sorted(a, 0, |a| - 1) && 0 <= low && low <= high && high <= |a| &&
+        forall i.((0 <= i && i < |a| && ~(low <= i && i < high)) -> a[i] != value)
+  (low < high)
+  {
+    mid := (low + high) / 2;
+    if (a[mid] < value) { low := mid + 1; }
+    else if (value < a[mid]) { high := mid; }
+    else { return mid; }
+  }
+  return -1;
+}

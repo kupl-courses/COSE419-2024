@@ -1,0 +1,14 @@
+@pre true
+@post true
+bool Simple(int n) {
+  int i; 
+  i := 0; 
+  while
+    @L: true 
+    # (n-i)
+    (true)  // infinite loop
+  {
+    i := i + 1;
+  }
+  return true;
+}

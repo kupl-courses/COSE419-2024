@@ -1,0 +1,10 @@
+@pre true 
+@post 0 <= rv && (rv == x || rv == -x)
+int Abs(int x)
+{
+  if (x < 0) {
+    return -x;
+  } else {
+    return x;
+  }
+}

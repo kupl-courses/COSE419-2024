@@ -1,0 +1,13 @@
+@pre n >= 0
+@post rv == n 
+int SimpleWhile(int n)
+{
+  int i; 
+  i := 0;
+  while 
+    @L: 0 <= i && i <= n
+    (i < n) {
+    i := i + 1;
+  }
+  return i; 
+}

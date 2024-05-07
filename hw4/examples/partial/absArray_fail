@@ -1,0 +1,16 @@
+@pre 0 <= |a0|
+@post forall k. (0 <= k && k < |rv| -> rv[k] >= 0)
+int[] AbsArray(int[] a0) {
+  int[] a;
+  int i;
+  a := a0;
+  for
+    @L: true // imprecise loop invariant
+    (i := 0; i < |a|; i := i + 1)
+  {
+    if (a[i] < 0) {
+      a[i] := -a[i];
+    }
+  }
+  return a;
+}

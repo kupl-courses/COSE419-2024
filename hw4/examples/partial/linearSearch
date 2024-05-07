@@ -1,0 +1,13 @@
+@pre 0 <= l && u < |a|
+@post rv <-> exists j. (l <= j && j <= u && a[j] == e)
+bool LinearSearch(int[] a, int l, int u, int e) {
+  int i;
+  for
+    @L: l <= i && forall j. (l <= j && j < i -> a[j] != e)
+    (i := l; i <= u; i := i + 1)
+  {
+    if (a[i] == e)
+      return true;
+  }
+  return false;
+}

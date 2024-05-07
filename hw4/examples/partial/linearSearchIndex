@@ -1,0 +1,16 @@
+@pre: |a| >= 0 
+@post: (0 <= rv -> (rv < |a| && a[rv] == key)) && 
+       (rv < 0 -> forall k. 0 <= k && k < |a| -> a[k] != key)
+int LinearSearchIndex(int[] a, int key)
+{
+  int index; 
+  index := 0;
+  while 
+    @L: 0 <= index && index <= |a| && forall k. 0 <= k && k < index -> a[k] != key
+    (index < |a|)
+  {
+    if (a[index] == key) { return index; }
+    index := index + 1;
+  }
+  return -1;
+}

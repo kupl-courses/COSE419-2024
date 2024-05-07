@@ -1,0 +1,15 @@
+@pre 0 <= |a0|
+@post forall k. (0 <= k && k < |rv| -> rv[k] >= 0)
+int[] AbsArray(int[] a0) {
+  int[] a; 
+  int i;
+  a := a0;
+  for
+    @L: 0 <= i && i <= |a| && forall j. (0 <= j && j < i -> a[j] >= 0)
+    (i := 0; i < |a|; i := i + 1) {
+    if (a[i] < 0) {
+      a[i] := -a[i];
+    }
+  }
+  return a;
+}

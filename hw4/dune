@@ -1,0 +1,19 @@
+(executable
+  (name main)
+  (public_name verifier)
+  (libraries
+    unix
+    core 
+    batteries
+    z3
+    logs
+    mtime
+    mtime.clock.os
+  )
+  
+(package verifier))
+
+(menhir
+  (modules parser))
+    
+(ocamllex lexer)

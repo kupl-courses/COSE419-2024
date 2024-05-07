@@ -1,0 +1,20 @@
+@pre u - l + 1 >= 0
+@post true
+# (u - l + 1)
+bool BinarySearch(int[] a, int l, int u, int e) {
+  int m; 
+  bool res; 
+  if (l > u) return false;
+  else {
+    m := (l + u) / 2;
+    if (a[m] == e) return true;
+    else if (a[m] < e) {
+      call res := BinarySearch(a, m + 1, u, e);
+      return res;
+    }
+    else {
+      call res := BinarySearch(a, l, m - 1, e);
+      return res;
+    }
+  }
+}

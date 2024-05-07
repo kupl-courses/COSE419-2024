@@ -1,0 +1,20 @@
+@pre |a| >= 1
+@post (forall k. 0 <= k && k < |a| -> a[k] <= rv) && 
+      (exists k. 0 <= k && k < |a| && a[k] == rv)
+int FindMax (int[] a)
+{
+  int i; 
+  int m; 
+  i := 0; 
+  m := a[0]; 
+  while 
+    @L: 0 <= i && i <= |a| 
+        && (forall k. 0 <= k && k < i -> a[k] <= m)
+        && |a| >= 1 && (a[0] == m || (exists k. 0 <= k && k < i && a[k] == m))
+  (i < |a|)
+  {
+    if (a[i] > m) { m := a[i]; }
+    i := i + 1;
+  }
+  return m; 
+}

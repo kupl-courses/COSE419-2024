@@ -1,0 +1,44 @@
+@pre |a0| >= 0
+@post sorted(rv, 0, |rv| - 1)
+int[] SelectionSort(int[] a0)
+{   
+    int[] a; 
+    int i; 
+    int j; 
+    int minValue; 
+    int minPos; 
+    a := a0; 
+
+    for 
+        @L1: 0 <= i && i <= |a| && 
+            (forall k. 
+                forall l. (0 <= k && k < i && i <= l && l < |a| -> a[k] <= a[l])) && 
+            sorted (a, 0, i - 1)
+    (i := 0; i < |a|; i := i + 1) 
+    {
+        minValue := a[i];
+        minPos := i; 
+        for 
+            @L2: |a| >= 0 && 0 <= i && i < |a| && 
+                (forall x. 
+                    forall y. 
+                        (0 <= x && x < i && i <= y && y < |a| -> a[x] <= a[y])) && 
+                i + 1 <= j && j <= |a| && 
+                i <= minPos && minPos < |a| && 
+                a[minPos] == minValue && 
+                (forall z. i <= z && z < j -> a[z] >= a[minPos]) && 
+                sorted (a, 0, i - 1) 
+        (j := i + 1; j < |a|; j := j + 1)
+        {
+            if (a[j] < minValue) {
+                minValue := a[j]; 
+                minPos := j; 
+            }
+        }
+        if (i != minPos) {
+            a[minPos] := a[i];
+            a[i] := minValue; 
+        }
+    }
+    return a; 
+}

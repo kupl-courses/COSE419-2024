@@ -1,0 +1,28 @@
+@pre |arr0| >= 0
+@post sorted(rv, 0, |rv| - 1)
+int[] BubbleSort(int[] arr0) {
+  int[] arr;
+  int i; 
+  int j;
+  int temp;
+  arr := arr0;
+  for
+    @L1: -1 <= i && i < |arr| && partitioned(arr, 0, i, i+1, |arr|-1) && sorted(arr, i, |arr| - 1)
+    (i := |arr| - 1; i > 0; i := i - 1)
+  {
+    for
+      @L2: 1 <= i && i < |arr| && 0 <= j && j <= i
+        && partitioned(arr, 0, i, i + 1, |arr| - 1)
+        && partitioned(arr, 0, j - 1, j, j)
+        && sorted(arr, i, |arr| - 1)
+      (j := 0; j < i; j := j + 1)
+    {
+      if (arr[j] > arr[j + 1]) {
+        temp := arr[j];
+        arr[j] := arr[j + 1];
+        arr[j + 1] := temp;
+      }
+    }
+  }
+  return arr;
+}
