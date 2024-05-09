@@ -40,7 +40,7 @@ let main : unit -> unit
     then prerr_endline ("Input Program.\n" ^ (pgm |> Syntax.string_of_pgm ~indent:1)) else () in 
   let _ = if args.printCfg then (Graph.Cfg.dot cfg; exit 1) in 
   let res = 
-    if args.termination then begin 
+    if not args.termination then begin 
         prerr_endline "Verifying partial correctnesss";
         Verifier.verify_partial_correctness pgm
       end 
