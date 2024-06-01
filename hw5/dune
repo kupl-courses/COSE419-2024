@@ -1,0 +1,19 @@
+(executable 
+  (name main)
+  (public_name ai)
+  (libraries 
+    unix
+    core 
+    batteries
+    z3
+    logs
+    mtime
+    mtime.clock.os
+  )
+  (package ai)
+)
+
+(menhir
+  (modules parser))
+    
+(ocamllex lexer)

@@ -1,0 +1,10 @@
+var i, j; 
+{
+  i := 0;
+  j := 0;
+  while (i <= 9) {
+    i := i + 1;
+    j := j + 1;
+  }
+  assert (i == j);
+}
